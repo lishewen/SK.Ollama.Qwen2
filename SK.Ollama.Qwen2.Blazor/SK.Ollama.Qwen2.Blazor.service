@@ -1,0 +1,17 @@
+[Unit]
+Description=SK.Ollama.Qwen2.Blazor
+
+[Service]
+WorkingDirectory=/home/ubuntu/SK.Ollama.Qwen2.Blazor
+ExecStart=/usr/lib/dotnet/dotnet /home/ubuntu/SK.Ollama.Qwen2.Blazor/SK.Ollama.Qwen2.Blazor.dll
+Restart=always
+# Restart service after 10 seconds if the dotnet service crashes:
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=dotnet-example
+User=root
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target

@@ -1,7 +1,13 @@
 using Microsoft.FluentUI.AspNetCore.Components;
 using SK.Ollama.Qwen2.Blazor.Components;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.ConfigureKestrel((context, serverOptions) =>
+{
+    serverOptions.Listen(IPAddress.Loopback, 5001);
+});
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
