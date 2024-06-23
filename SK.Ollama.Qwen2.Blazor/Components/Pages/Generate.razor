@@ -1,0 +1,36 @@
+﻿@page "/sk"
+
+<PageTitle>💬 OLLama - QWen2 🚀</PageTitle>
+<div>
+    @if (AnswerList.Count > 0)
+    {
+        foreach (var Answer in AnswerList)
+        {
+            @if (Answer.done)
+            {
+                <FluentCard Style="background: #0e1a3d;color: #fff;">
+                    <p>👨‍💻 @Answer.prompt</p>
+                </FluentCard>
+                <br />
+                <FluentCard Style="background: #6f2008;color: #fff;">
+                    <p>🤖 @Answer.htmlData</p>
+                </FluentCard>
+                <br />
+            }
+        }
+    }
+    <hr />
+    <div style="display:flex">
+        <FluentTextField @bind-Value=ask Placeholder="Enter your prompt here..." style="width: 70%;"></FluentTextField>
+
+        <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowClockwise())"
+                      Appearance="Appearance.Accent"
+                      Loading="@loading"
+                      OnClick="@(() => SendAsync(ask))">
+            Send
+        </FluentButton>
+    </div>
+    <div style="width:70%; display: grid; grid-gap: 12px; grid-auto-flow: column;">
+        <FluentProgress Visible="@(loading)"></FluentProgress>
+    </div>
+</div>

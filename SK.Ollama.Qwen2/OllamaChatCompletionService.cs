@@ -15,7 +15,7 @@ namespace SK.Ollama.Qwen2
 
         public async Task<IReadOnlyList<ChatMessageContent>> GetChatMessageContentsAsync(ChatHistory chatHistory, PromptExecutionSettings? executionSettings = null, Kernel? kernel = null, CancellationToken cancellationToken = default)
         {
-            var ollama = new OllamaApiClient("http://localhost:11434", "qwen2");
+            var ollama = new OllamaApiClient("http://10.147.17.66:11434", "qwen2");
 
             var chat = new Chat(ollama, _ => { });
 
