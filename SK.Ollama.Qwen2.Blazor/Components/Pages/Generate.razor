@@ -21,7 +21,7 @@
     }
     <hr />
     <div style="display:flex">
-        <FluentTextField @bind-Value=ask Placeholder="Enter your prompt here..." style="width: 70%;"></FluentTextField>
+        <FluentTextField @bind-Value="ask" Placeholder="Enter your prompt here..." style="width: 70%;" @onkeyup="ProcessEnterKey"></FluentTextField>
 
         <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowClockwise())"
                       Appearance="Appearance.Accent"

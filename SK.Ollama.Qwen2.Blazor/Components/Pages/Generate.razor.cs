@@ -2,16 +2,18 @@
 using Microsoft.SemanticKernel;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System.Net.NetworkInformation;
+using System.Diagnostics;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace SK.Ollama.Qwen2.Blazor.Components.Pages
 {
     public partial class Generate
     {
+        private const string OllamaIP = "10.147.17.66";
         private readonly List<Data.Answer> AnswerList = [];
-
         private string ask = string.Empty;
-
-        private bool loading = false;
+        private bool loading = true;
         private readonly Kernel? kernel;
 
         [Inject]
@@ -20,8 +22,29 @@ namespace SK.Ollama.Qwen2.Blazor.Components.Pages
         public Generate()
         {
             var builder = Kernel.CreateBuilder();
-            builder.Services.AddKeyedSingleton<IChatCompletionService>("ollamaChat", new OllamaChatCompletionService());
+            builder.Services.AddKeyedSingleton<IChatCompletionService>("ollamaChat", new OllamaChatCompletionService(OllamaIP));
             kernel = builder.Build();
+
+            try
+            {
+                Ping myPing = new();
+                PingReply reply = myPing.Send(OllamaIP, 1000);
+                if (reply != null)
+                {
+                    if (reply.Status == IPStatus.Success)
+                        loading = false;
+                }
+            }
+            catch
+            {
+                Debug.WriteLine("An error occurred while pinging an IP");
+            }
+        }
+
+        private async Task ProcessEnterKey(KeyboardEventArgs eventArgs)
+        {
+            if (eventArgs.Key == "Enter")        // fire on enter 
+                await SendAsync(ask);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)

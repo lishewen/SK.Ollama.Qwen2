@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace SK.Ollama.Qwen2
 {
-    public class OllamaChatCompletionService : IChatCompletionService
+    public class OllamaChatCompletionService(string ip) : IChatCompletionService
     {
         public IReadOnlyDictionary<string, object?> Attributes => throw new NotImplementedException();
 
         public async Task<IReadOnlyList<ChatMessageContent>> GetChatMessageContentsAsync(ChatHistory chatHistory, PromptExecutionSettings? executionSettings = null, Kernel? kernel = null, CancellationToken cancellationToken = default)
         {
-            var ollama = new OllamaApiClient("http://10.147.17.66:11434", "qwen2");
+            var ollama = new OllamaApiClient($"http://{ip}:11434", "qwen2");
 
             var chat = new Chat(ollama, _ => { });
 
