@@ -4,10 +4,12 @@ using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#if !DEBUG
 builder.WebHost.ConfigureKestrel((context, serverOptions) =>
 {
     serverOptions.Listen(IPAddress.Loopback, 5001);
 });
+#endif
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
